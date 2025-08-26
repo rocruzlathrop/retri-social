@@ -5,11 +5,11 @@ Datos.
 
 Encontrarás los siguientes archivos
 
--Sesión 1_Colab_intro
--Sesión_2_Código Web scraping
--Sesión_2_Ejemplos con Pandas
--Sesión_3_Búsqueda de palabras con Power Shell
--PPT Curso
--Programa Curso
+Sesión 1_Colab_intro
+Sesión_2_Código Web scraping
+Sesión_2_Ejemplos con Pandas
+Sesión_3_Búsqueda de palabras con Power Shell
+PPT Curso
+Programa Curso
 
 
