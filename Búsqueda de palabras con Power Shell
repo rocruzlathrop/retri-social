@@ -1,0 +1,62 @@
+######Código Power Shell#####
+#####Búsqueda de palabras en archivos de texto con salida en csv#####
+
+##fijar directorio
+
+Cd C:\Users\Rcruz\Documents\discursos_25
+
+###Búsqueda de palabra
+
+Select-String -Path *.txt -Pattern "mujer" -CaseSensitive:$false ##Palabra
+
+Select-String -Path *.txt -Pattern "violencia contra la mujer" -SimpleMatch -CaseSensitive:$false  ###Frase
+
+##Identificar el nombre de los archivos que tienen el nombre
+
+Get-ChildItem -Recurse -Filter *.txt |
+    Select-String -Pattern "mujer" -CaseSensitive:$false |
+    Select-Object -ExpandProperty Path |
+    Sort-Object -Unique
+
+##exportar el archivo a csv con una frase de contexto en la que aparece el campo buscado
+
+Get-ChildItem -Recurse -Filter *.txt |
+    Select-String -Pattern "mujer" -CaseSensitive:$false |
+    Select-Object @{Name="Archivo";Expression={$_.Path}},
+                  @{Name="Fragmento";Expression={
+                      $line=$_.Line
+                      $index=$line.IndexOf($_.Matches.Value)
+                      if ($index -ge 0) {
+                          $start=[Math]::Max(0, $index-30)
+                          $length=[Math]::Min(60, $line.Length-$start)
+                          $line.Substring($start, $length)
+                      } else {
+                          $line
+                      }
+                  }} |
+    Export-Csv -Path resultados.csv -NoTypeInformation -Encoding UTF8
+
+###ver el archivo CSV
+
+Export-Csv -Path resultados.csv -NoTypeInformation -Encoding UTF8
+
+Get-Location
+
+Invoke-Item resultados.csv
+
+###Crear un archivo con la carpeta que tiene los archivos
+
+New-Item -ItemType Directory -Path ".\mujer_encontrado_p"
+
+###Copiar los archivos que tienen mujer en esa carpeta
+
+Get-ChildItem -Recurse -Filter *.txt |
+                           Select-String -Pattern "mujer" -CaseSensitive:$false |
+                           Select-Object -ExpandProperty Path |
+                           Sort-Object -Unique |
+                           ForEach-Object { Copy-Item $_ -Destination ".\mujer_encontrado_p" }
+
+
+Enlace del video
+
+https://youtu.be/pSJg6YvgrXE
