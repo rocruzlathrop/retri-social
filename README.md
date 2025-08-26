@@ -1,5 +1,5 @@
 # retri-social
-Aquí encontrará los recursos correspondientes a las diferentes clases del Curso:
+Aquí encontrarás los recursos correspondientes a las diferentes clases del Curso:
 Herramientas para la recolección de información de texto para la construcción de bases de 
 Datos. 
 Encontrarás los siguientes archivos
